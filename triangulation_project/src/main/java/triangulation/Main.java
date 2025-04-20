@@ -13,5 +13,7 @@ public class Main {
         Polygon polygon = new Polygon(points);
 
         System.out.println(polygon.area());
+
+        System.out.println(("check"));
     }
 }
