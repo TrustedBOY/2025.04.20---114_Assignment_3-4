@@ -12,14 +12,8 @@ public class Main {
         // Test the Triangle class
         testTriangle();
         System.out.println("---------------------");
-
-
-        String str = "hi     hell";
-
-        String[] words = str.split(" ");
-        for (String word : words) {
-            System.out.println(word);
-        }
+        // Test the VerticeReader class
+        testReader();
 
         
     }
@@ -58,6 +52,19 @@ public class Main {
             System.err.println("Triangle creation failed: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Unexpected error: " + e.getMessage());
+        }
+    }
+    private static void testReader(){
+        String filePath = "triangulation_project\\src\\inputData\\1.txt";
+
+        try {
+            List<Point> points = VerticeReader.readVerticesFromFile(filePath);
+            System.out.println("Points read from file:");
+            for (Point point : points) {
+                System.out.println(point);
+            }
+        } catch (Exception e) {
+            System.err.println("Error reading file: " + e.getMessage());
         }
     }
 
