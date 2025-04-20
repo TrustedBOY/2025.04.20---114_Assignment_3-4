@@ -1,12 +1,17 @@
 package triangulation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // Test the Polygon class
         testPolygonArea();
+        System.out.println("---------------------");
+        // Test the Triangle class
+        testTriangle();
+        System.out.println("---------------------");
 
         
     }
@@ -29,4 +34,23 @@ public class Main {
         double area = polygon.area();
         System.out.println("Area of the polygon: " + area);
     }
+    private static void testTriangle(){
+        List<Point> trianglePoints = Arrays.asList(
+            new Point(0, 0),
+            new Point(4, 3),
+            new Point(8, 0)  // This will fail: all on the same line
+        );
+
+        try {
+            Triangle triangle = new Triangle(trianglePoints);
+            System.out.println("Triangle created successfully.");
+            System.out.println("Area: " + triangle.area());
+            System.out.println("Is thin? " + triangle.isThin());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Triangle creation failed: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
+    }
+
 }
