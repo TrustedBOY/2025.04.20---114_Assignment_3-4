@@ -14,6 +14,9 @@ public class Triangle extends Geometry {
         if (!isValidTriangel(vertices)) {
             throw new IllegalArgumentException("The provided vertices do not form a valid triangle.");
         }
+        if (isThin()) {
+            throw new IllegalArgumentException("The triangle is too thin.");
+        }
     }
 
     @Override
