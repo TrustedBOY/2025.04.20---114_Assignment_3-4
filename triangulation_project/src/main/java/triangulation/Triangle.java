@@ -19,16 +19,9 @@ public class Triangle extends Geometry {
         }
     }
 
-    @Override
-    public double area() {
-        // Calculating the area of a triangle using Heron's formula
 
-        double a = distance(vertices.get(0), vertices.get(1));
-        double b = distance(vertices.get(1), vertices.get(2));
-        double c = distance(vertices.get(2), vertices.get(0));
-
-        double s = (a + b + c) / 2;
-        return Math.sqrt(s * (s - a) * (s - b) * (s - c));
+    protected void write(){
+        
     }
 
     public boolean isValidTriangel(List<Point> vertices) {

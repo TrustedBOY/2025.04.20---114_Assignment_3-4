@@ -13,6 +13,14 @@ public class Main {
         testTriangle();
         System.out.println("---------------------");
 
+
+        String str = "hi     hell";
+
+        String[] words = str.split(" ");
+        for (String word : words) {
+            System.out.println(word);
+        }
+
         
     }
     private static void testPolygonArea() {

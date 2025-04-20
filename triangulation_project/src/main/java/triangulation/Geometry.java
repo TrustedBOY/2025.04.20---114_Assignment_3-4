@@ -70,4 +70,5 @@ public abstract class Geometry {
         return Math.abs(area) / 2.0;
     }
 
+    protected abstract void write();
 }

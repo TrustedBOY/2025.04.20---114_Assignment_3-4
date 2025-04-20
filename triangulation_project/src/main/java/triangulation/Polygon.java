@@ -8,7 +8,9 @@ public class Polygon extends Geometry {
         super(vertices);
     }
 
-    
+    protected void write(){
+        
+    }
     
 
 }
