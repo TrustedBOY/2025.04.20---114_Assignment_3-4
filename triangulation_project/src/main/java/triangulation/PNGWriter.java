@@ -36,7 +36,6 @@ public class PNGWriter extends ModelWriter {
         graphic.fillRect(0, 0, width, height);
 
         // Find bounds
-
         double minX = getMinX(vertices);
         double maxX = getMaxX(vertices);
         double minY = getMinY(vertices);    
@@ -60,7 +59,7 @@ public class PNGWriter extends ModelWriter {
             yPoints[i] = (int) ((maxY - vertices.get(i).y) * scale + 10); 
         }
 
-        graphic.setColor(new Color(102, 102, 102 )); // or any color you like
+        graphic.setColor(new Color(102, 102, 102 ));
         graphic.fillPolygon(xPoints, yPoints, xPoints.length);
 
 
@@ -68,7 +67,7 @@ public class PNGWriter extends ModelWriter {
             ImageIO.write(image, "png", new File(path));
             System.out.println("Image saved to: " + path);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
 
