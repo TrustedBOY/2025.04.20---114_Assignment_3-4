@@ -1,5 +1,6 @@
 package triangulation;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,18 +8,17 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        // Test the Polygon class
-        testPolygonArea();
-        System.out.println("---------------------");
-        // Test the Triangle class
-        testTriangle();
-        System.out.println("---------------------");
-        // Test the VerticeReader class
-        testReader();
-        System.out.println("---------------------");
-        // Test the PNGWriter class
-        testReaderWWriter();
-        System.out.println("---------------------");
+        List<List<Point>> polygons = read();
+        ModelWriter pngWriter = new PNGWriter();
+        String writeFilePath = "triangulation_project\\src\\outputImages\\";
+
+        for (int i = 0; i < polygons.size(); i++) {
+
+            String currentWriteFilePath = writeFilePath + (i + 1) + "_Polygon.png";
+            pngWriter.write(currentWriteFilePath, polygons.get(i));
+        }
+
+        System.out.println(polygons.size() + " polygons written to PNG files.");
 
     }
 
@@ -88,10 +88,28 @@ public class Main {
         } catch (Exception e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
-
-
-
-
     }
 
+    private static List<List<Point>> read() {
+        String filePath = "triangulation_project\\src\\inputData\\";
+        List<List<Point>> polygons = new ArrayList<>();
+
+        for (int i = 0; true ; i++) {
+            String currentFilePath = filePath + (i + 1) + ".txt";
+            File file = new File(currentFilePath);
+
+            if (!file.exists()) {
+                break;
+            }
+
+            try {
+                polygons.add(VerticeReader.readVerticesFromFile(currentFilePath));
+            } catch (Exception e) {
+                System.err.println("Error reading file: " + e.getMessage());
+                break;
+            }
+        }
+
+        return polygons;
+    }
 }

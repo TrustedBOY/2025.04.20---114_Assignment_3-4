@@ -7,6 +7,9 @@ public class Polygon extends Geometry {
     public Polygon(List<Point> vertices) {
         super(vertices);
     }
+    protected void write(){
+
+    }
 
     
 

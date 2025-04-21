@@ -19,6 +19,9 @@ public class Triangle extends Geometry {
         }
     }
 
+    protected void write(){
+
+    }
 
     public boolean isValidTriangel(List<Point> vertices) {
         double a = distance(vertices.get(0), vertices.get(1));

@@ -44,9 +44,9 @@ public class PNGWriter extends ModelWriter {
                 yPoints[i] = (int) ((maxY - polygon.get(i).y) * scale + 10);
             }
 
-            int r  = (int) (Math.random() * 255) - 22;
-            int g  = (int) (Math.random() * 255) - 22;
-            int b  = (int) (Math.random() * 255) - 22;
+            int r  = Math.max((int) (Math.random() * 255) - 22,22);
+            int g  = Math.max((int) (Math.random() * 255) - 22,22);
+            int b  = Math.max((int) (Math.random() * 255) - 22,22);
 
             graphic.setColor(new Color(r, g, b));
             graphic.fillPolygon(xPoints, yPoints, xPoints.length);
