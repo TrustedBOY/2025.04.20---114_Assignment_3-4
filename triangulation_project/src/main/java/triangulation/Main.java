@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
         // Test the Polygon class
         testPolygonArea();
@@ -14,11 +15,15 @@ public class Main {
         System.out.println("---------------------");
         // Test the VerticeReader class
         testReader();
+        System.out.println("---------------------");
+        // Test the PNGWriter class
+        testReaderWWriter();
+        System.out.println("---------------------");
 
-        
     }
+
     private static void testPolygonArea() {
-        
+
         List<Point> vertices = new ArrayList<>();
 
         Point[] points = {
@@ -27,7 +32,7 @@ public class Main {
             new Point(4, 3),
             new Point(0, 3)
         };
-        
+
         for (Point point : points) {
             vertices.add(point);
         }
@@ -36,11 +41,12 @@ public class Main {
         double area = polygon.area();
         System.out.println("Area of the polygon: " + area);
     }
-    private static void testTriangle(){
+
+    private static void testTriangle() {
         List<Point> trianglePoints = Arrays.asList(
-            new Point(0, 0),
-            new Point(4, 3),
-            new Point(8, 0)  // This will fail: all on the same line
+                new Point(0, 0),
+                new Point(4, 3),
+                new Point(8, 0) // This will fail: all on the same line
         );
 
         try {
@@ -54,7 +60,8 @@ public class Main {
             System.err.println("Unexpected error: " + e.getMessage());
         }
     }
-    private static void testReader(){
+
+    private static void testReader() {
         String filePath = "triangulation_project\\src\\inputData\\1.txt";
 
         try {
@@ -66,6 +73,26 @@ public class Main {
         } catch (Exception e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
+    }
+
+    private static void testReaderWWriter() {
+        String readFilePath = "triangulation_project\\src\\inputData\\1.txt";
+        String writeFilePath = "triangulation_project\\src\\outputImages\\1.png";
+
+        ModelWriter pngWriter = new PNGWriter();
+        try {
+            List<Point> points = VerticeReader.readVerticesFromFile(readFilePath);
+            System.out.println("Points read from file:");
+            for (Point point : points) {
+                pngWriter.write(writeFilePath, points);
+            }
+        } catch (Exception e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+
+
+
+
     }
 
 }
