@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 public class PNGWriter extends ModelWriter {
 
     @Override
-    public void write(String path, List<Point>[] polygons) { 
+    public void write(String path, List<Point>[] polygons) {
         int width = 800;
         int height = 600;
 
@@ -20,37 +20,53 @@ public class PNGWriter extends ModelWriter {
         Graphics graphic = image.getGraphics();
 
         graphic.setColor(Color.white);
-        graphic.fillRect(0,0,width,height);
+        graphic.fillRect(0, 0, width, height);
 
-
-        
     }
 
     @Override
-    public void write(String path , List<Point> vertices){
-        int width = 10;
-        int height = 10;
+    public void write(String path, List<Point> vertices) {
+        int width = 600;
+        int height = 600;
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics graphic = image.getGraphics();
 
         graphic.setColor(Color.white);
-        graphic.fillRect(0,0,width,height);
+        graphic.fillRect(0, 0, width, height);
+
+        // Find bounds
+
+        double minX = getMinX(vertices);
+        double maxX = getMaxX(vertices);
+        double minY = getMinY(vertices);    
+        double maxY = getMaxY(vertices);
+        System.out.println("minX: " + minX + ", maxX: " + maxX);
+        System.out.println("minY: " + minY + ", maxY: " + maxY);
+
+        
+
+        double scaleX = (width - 40) / (maxX - minX);
+        double scaleY = (height - 40) / (maxY - minY);
+        double scale = Math.min(scaleX, scaleY);
+
+        System.out.println("scaleX: " + scaleX + ", scaleY: " + scaleY);
 
         int[] xPoints = new int[vertices.size()];
         int[] yPoints = new int[vertices.size()];
 
         for (int i = 0; i < vertices.size(); i++) {
-            xPoints[i] = (int) vertices.get(i).x;
-            yPoints[i] = (int) vertices.get(i).y;
+            xPoints[i] = (int) ((vertices.get(i).x - minX) * scale + 10);
+            yPoints[i] = (int) ((maxY - vertices.get(i).y) * scale + 10); 
         }
 
+        graphic.setColor(new Color(102, 102, 102 )); // or any color you like
+        graphic.fillPolygon(xPoints, yPoints, xPoints.length);
 
-        graphic.setColor(Color.gray);
-        graphic.drawPolygon(xPoints, yPoints, xPoints.length);
 
         try {
-            ImageIO.write(image,"png", new File(path));
+            ImageIO.write(image, "png", new File(path));
+            System.out.println("Image saved to: " + path);
         } catch (IOException e) {
             e.printStackTrace();
         }

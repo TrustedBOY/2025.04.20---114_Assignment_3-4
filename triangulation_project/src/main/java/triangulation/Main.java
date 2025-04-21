@@ -83,9 +83,8 @@ public class Main {
         try {
             List<Point> points = VerticeReader.readVerticesFromFile(readFilePath);
             System.out.println("Points read from file:");
-            for (Point point : points) {
-                pngWriter.write(writeFilePath, points);
-            }
+            pngWriter.write(writeFilePath, points);
+
         } catch (Exception e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
