@@ -20,9 +20,8 @@ public class TextReader {
     private void read() {
 
         for (int i = 0; true ; i++) {
-            String currentFilePath = filePath + (i + 1) + ".txt";
+            String currentFilePath = filePath + "polygon_" + (i + 1) + ".txt";
             File file = new File(currentFilePath);
-
             if (!file.exists()) {
                 break;
             }
