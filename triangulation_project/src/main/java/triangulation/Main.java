@@ -19,7 +19,7 @@ public class Main {
         }
 
         System.out.println(polygons.size() + " polygons written to PNG files.");
-
+        System.out.println(".()");
     }
     /*
     private static void testPolygonArea() {
