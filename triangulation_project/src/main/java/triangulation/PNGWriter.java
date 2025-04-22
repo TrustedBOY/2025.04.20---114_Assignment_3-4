@@ -1,7 +1,9 @@
 package triangulation;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -44,9 +46,9 @@ public class PNGWriter extends ModelWriter {
                 yPoints[i] = (int) ((maxY - polygon.get(i).y) * scale + 10);
             }
 
-            int r  = Math.max((int) (Math.random() * 255) - 22,22);
-            int g  = Math.max((int) (Math.random() * 255) - 22,22);
-            int b  = Math.max((int) (Math.random() * 255) - 22,22);
+            int r = Math.max((int) (Math.random() * 255) - 22, 22);
+            int g = Math.max((int) (Math.random() * 255) - 22, 22);
+            int b = Math.max((int) (Math.random() * 255) - 22, 22);
 
             graphic.setColor(new Color(r, g, b));
             graphic.fillPolygon(xPoints, yPoints, xPoints.length);
@@ -62,11 +64,11 @@ public class PNGWriter extends ModelWriter {
 
     @Override
     public void write(String path, List<Point> vertices) {
-        int width = 600;
-        int height = 600;
+        int width = 2000;
+        int height = 2000;
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics graphic = image.getGraphics();
+        Graphics2D graphic = (Graphics2D) image.getGraphics();
 
         graphic.setColor(Color.white);
         graphic.fillRect(0, 0, width, height);
@@ -92,6 +94,10 @@ public class PNGWriter extends ModelWriter {
             xPoints[i] = (int) ((vertices.get(i).x - minX) * scale + 10);
             yPoints[i] = (int) ((maxY - vertices.get(i).y) * scale + 10);
         }
+
+        graphic.setColor(Color.black);
+        graphic.setStroke(new BasicStroke(10)); 
+        graphic.drawPolygon(xPoints, yPoints, xPoints.length);
 
         graphic.setColor(new Color(102, 102, 102));
         graphic.fillPolygon(xPoints, yPoints, xPoints.length);

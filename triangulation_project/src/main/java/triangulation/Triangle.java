@@ -40,7 +40,7 @@ public class Triangle extends Geometry {
         double minSide = Math.min(a, Math.min(b, c));
         double maxSide = Math.max(a, Math.max(b, c));
 
-        return (minSide / maxSide) < thresholdRatio; // Example threshold for thinness
+        return (minSide / maxSide) < thresholdRatio; 
     }
 
 }
