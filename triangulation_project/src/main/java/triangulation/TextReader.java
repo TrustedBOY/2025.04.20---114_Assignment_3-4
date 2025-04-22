@@ -1,12 +1,40 @@
 package triangulation;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VerticeReader {
+public class TextReader {
+
+    public final String filePath ;
+    private List<List<Point>> polygons = new ArrayList<>();
+
+    public TextReader(String filePath) {
+        this.filePath = filePath;
+        read();
+    }
+
+    private void read() {
+
+        for (int i = 0; true ; i++) {
+            String currentFilePath = filePath + (i + 1) + ".txt";
+            File file = new File(currentFilePath);
+
+            if (!file.exists()) {
+                break;
+            }
+
+            try {
+                polygons.add(readVerticesFromFile(currentFilePath));
+            } catch (Exception e) {
+                System.err.println("Error reading file: " + e.getMessage());
+                break;
+            }
+        }
+    }
 
     public static List<Point> readVerticesFromFile(String filePath) {
 
@@ -34,5 +62,9 @@ public class VerticeReader {
         }
 
         return vertices;
+    }
+
+    public List<List<Point>> getPolygons(){
+        return polygons;
     }
 }

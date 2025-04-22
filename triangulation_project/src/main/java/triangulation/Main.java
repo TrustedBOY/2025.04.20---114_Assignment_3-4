@@ -1,19 +1,19 @@
 package triangulation;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<List<Point>> polygons = read();
-        ModelWriter pngWriter = new PNGWriter();
+
+        String readFilePath = "triangulation_project\\src\\inputData\\";
         String writeFilePath = "triangulation_project\\src\\outputImages\\";
 
-        for (int i = 0; i < polygons.size(); i++) {
+        ModelWriter pngWriter = new PNGWriter();
+        TextReader reader = new TextReader(readFilePath);
+        List<List<Point>> polygons = reader.getPolygons();
 
+        for (int i = 0; i < polygons.size(); i++) {
             String currentWriteFilePath = writeFilePath + (i + 1) + "_Polygon.png";
             pngWriter.write(currentWriteFilePath, polygons.get(i));
         }
@@ -21,7 +21,7 @@ public class Main {
         System.out.println(polygons.size() + " polygons written to PNG files.");
 
     }
-
+    /*
     private static void testPolygonArea() {
 
         List<Point> vertices = new ArrayList<>();
@@ -65,7 +65,7 @@ public class Main {
         String filePath = "triangulation_project\\src\\inputData\\1.txt";
 
         try {
-            List<Point> points = VerticeReader.readVerticesFromFile(filePath);
+            List<Point> points = TextReader.readVerticesFromFile(filePath);
             System.out.println("Points read from file:");
             for (Point point : points) {
                 System.out.println(point);
@@ -81,7 +81,7 @@ public class Main {
 
         ModelWriter pngWriter = new PNGWriter();
         try {
-            List<Point> points = VerticeReader.readVerticesFromFile(readFilePath);
+            List<Point> points = TextReader.readVerticesFromFile(readFilePath);
             System.out.println("Points read from file:");
             pngWriter.write(writeFilePath, points);
 
@@ -103,13 +103,14 @@ public class Main {
             }
 
             try {
-                polygons.add(VerticeReader.readVerticesFromFile(currentFilePath));
+                polygons.add(TextReader.readVerticesFromFile(currentFilePath));
             } catch (Exception e) {
-                System.err.println("Error reading file: " + e.getMessage());
+                System.err.println( "Error reading file: " + e.getMessage());
                 break;
             }
         }
 
         return polygons;
     }
+     */
 }

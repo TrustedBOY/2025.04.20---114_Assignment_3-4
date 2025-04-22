@@ -52,23 +52,9 @@ public abstract class Geometry {
         }
     }
 
-    public double area() {
-        // This method calculates the area of the polygon using the shoelace formula.
+    public abstract double area();
 
-        double area = 0.0;
-        for (int i = 0; i < vertices.size(); i++) {
+    @Override 
+    public abstract String toString();
 
-            try {
-                Point p1 = vertices.get(i);
-                Point p2 = vertices.get((i + 1) % vertices.size());
-                area += (p1.x * p2.y) - (p2.x * p1.y);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Index out of bounds in: " + getClass() + ".area() | " + e.getMessage());
-            }
-
-        }
-        return Math.abs(area) / 2.0;
-    }
-
-    protected abstract void write();
 }
