@@ -2,7 +2,6 @@ package triangulation;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -19,7 +18,6 @@ public class Main {
         }
 
         System.out.println(polygons.size() + " polygons written to PNG files.");
-        System.out.println("amir is gay");
     }
     private static List<List<Point>> read() {
         String filePath = "triangulation_project\\src\\inputData\\";
@@ -34,7 +32,7 @@ public class Main {
             }
 
             try {
-                polygons.add(VerticeReader.readVerticesFromFile(currentFilePath));
+                polygons.add(TextReader.readVerticesFromFile(currentFilePath));
             } catch (Exception e) {
                 System.err.println("Error reading file: " + e.getMessage());
                 break;
