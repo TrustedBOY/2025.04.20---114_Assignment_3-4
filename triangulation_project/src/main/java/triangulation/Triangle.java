@@ -19,10 +19,6 @@ public class Triangle extends Geometry {
         }
     }
 
-    protected void write(){
-
-    }
-
     public boolean isValidTriangel(List<Point> vertices) {
         double a = distance(vertices.get(0), vertices.get(1));
         double b = distance(vertices.get(1), vertices.get(2));
@@ -43,4 +39,21 @@ public class Triangle extends Geometry {
         return (minSide / maxSide) < thresholdRatio; 
     }
 
+    @Override
+    public double area() {
+        // Using Heron's formula to calculate the area of the triangle
+
+        double a = distance(vertices.get(0), vertices.get(1));
+        double b = distance(vertices.get(1), vertices.get(2));
+        double c = distance(vertices.get(2), vertices.get(0));
+
+        double s = (a + b + c) / 2.0;
+        return Math.sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+
+    @Override
+    
+    public String toString() {
+        return "Triangle: " + vertices.get(0) + ", " + vertices.get(1) + ", " + vertices.get(2);
+    }
 }
