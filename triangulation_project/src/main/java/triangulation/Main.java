@@ -19,7 +19,7 @@ public class Main {
         }
 
         System.out.println(polygons.size() + " polygons written to PNG files.");
-        System.out.println(".()");
+        System.out.println("amir is gay");
     }
 
     private static void testPolygonArea() {
