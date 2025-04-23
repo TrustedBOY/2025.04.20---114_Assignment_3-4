@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String readFilePath = "triangulation_project\\src\\inputData2\\";
+        String readFilePath = "triangulation_project\\src\\inputData\\";
         String writeFilePath = "triangulation_project\\src\\outputImages\\";
         
         ModelWriter pngWriter = new PNGWriter();
@@ -22,13 +22,14 @@ public class Main {
         System.out.println(triangulation.getTriangles().toString());
 
         List<Point>[] vertices = triangulation.getVertices();
-        pngWriter.write(writeFilePath, vertices);
+        pngWriter.write(writeFilePath+ "\\1_Triangle.png", vertices);
+        pngWriter.write(writeFilePath+ "\\1_Polygon.png", polygons.get(0));
 
-        for (int i = 0; i < vertices.length ; i++) {
-            System.out.println("hi");
-            String currentWriteFilePath = writeFilePath + (i + 1) + "_Polygon.png";
-            pngWriter.write(currentWriteFilePath, vertices[i]);
-        }
+        // for (int i = 0; i < vertices.length ; i++) {
+        //     System.out.println("hi");
+        //     String currentWriteFilePath = writeFilePath + (i + 1) + "_Polygon.png";
+        //     pngWriter.write(currentWriteFilePath, vertices[i]);
+        // }
 
     
         // for (int i = 0; i < polygons.size(); i++) {

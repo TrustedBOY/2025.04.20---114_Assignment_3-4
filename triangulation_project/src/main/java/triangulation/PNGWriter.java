@@ -2,7 +2,6 @@ package triangulation;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,7 +22,7 @@ public class PNGWriter extends ModelWriter {
         int height = 1500;
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics graphic = image.getGraphics();
+        Graphics2D graphic = (Graphics2D) image.getGraphics();
 
         graphic.setColor(Color.white);
         graphic.fillRect(0, 0, width, height);
@@ -54,6 +53,10 @@ public class PNGWriter extends ModelWriter {
             int g = (int) (Math.random() * (255 - 20)) + 20;
             int b = (int) (Math.random() * (255 - 20)) + 20;
 
+            graphic.setColor(Color.black);
+            graphic.setStroke(new BasicStroke(10));
+            graphic.drawPolygon(xPoints, yPoints, xPoints.length);
+
             graphic.setColor(new Color(r, g, b));
             graphic.fillPolygon(xPoints, yPoints, xPoints.length);
         }
@@ -66,7 +69,6 @@ public class PNGWriter extends ModelWriter {
         }
     }
 
-    
     @Override
     public void write(String path, List<Point> vertices) {
         int width = 1000;
