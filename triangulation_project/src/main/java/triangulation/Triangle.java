@@ -2,9 +2,9 @@ package triangulation;
 
 import java.util.List;
 
-public class Triangle extends Geometry {
+public class Triangle extends Polygon {
 
-    private static final double thresholdRatio = 0.1;
+    public static final double thinThresholdRatio = 0.1;
 
     public Triangle(List<Point> vertices) {
         super(vertices);
@@ -12,11 +12,9 @@ public class Triangle extends Geometry {
             throw new IllegalArgumentException("A triangle must have exactly 3 vertices.");
         }
         if (!isValidTriangel(vertices)) {
-            throw new IllegalArgumentException("The provided vertices do not form a valid triangle.");
+            
         }
-        if (isThin()) {
-            throw new IllegalArgumentException("The triangle is too thin.");
-        }
+        
     }
 
     public boolean isValidTriangel(List<Point> vertices) {
@@ -36,7 +34,7 @@ public class Triangle extends Geometry {
         double minSide = Math.min(a, Math.min(b, c));
         double maxSide = Math.max(a, Math.max(b, c));
 
-        return (minSide / maxSide) < thresholdRatio; 
+        return (minSide / maxSide) < Triangle.thinThresholdRatio; 
     }
 
     @Override
@@ -56,4 +54,6 @@ public class Triangle extends Geometry {
     public String toString() {
         return "Triangle: " + vertices.get(0) + ", " + vertices.get(1) + ", " + vertices.get(2);
     }
+
+    
 }

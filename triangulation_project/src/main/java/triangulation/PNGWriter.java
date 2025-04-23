@@ -13,9 +13,12 @@ import javax.imageio.ImageIO;
 
 public class PNGWriter extends ModelWriter {
 
+    public PNGWriter() {
+        super();
+    }
 
     @Override
-    public void write(String path , List<Point>[] polygons) {
+    public void write(String path, List<Point>[] polygons) {
         int width = 1500;
         int height = 1500;
 
@@ -47,9 +50,9 @@ public class PNGWriter extends ModelWriter {
                 yPoints[i] = (int) ((maxY - polygon.get(i).y) * scale + 30);
             }
 
-            int r = (int) (Math.random() * (255-20)) + 20;
-            int g = (int) (Math.random() * (255-20)) + 20;
-            int b = (int) (Math.random() * (255-20)) + 20;
+            int r = (int) (Math.random() * (255 - 20)) + 20;
+            int g = (int) (Math.random() * (255 - 20)) + 20;
+            int b = (int) (Math.random() * (255 - 20)) + 20;
 
             graphic.setColor(new Color(r, g, b));
             graphic.fillPolygon(xPoints, yPoints, xPoints.length);
@@ -63,8 +66,9 @@ public class PNGWriter extends ModelWriter {
         }
     }
 
+    
     @Override
-    public void write(String path , List<Point> vertices) {
+    public void write(String path, List<Point> vertices) {
         int width = 1000;
         int height = 1000;
 
@@ -97,7 +101,7 @@ public class PNGWriter extends ModelWriter {
         }
 
         graphic.setColor(Color.black);
-        graphic.setStroke(new BasicStroke(10)); 
+        graphic.setStroke(new BasicStroke(10));
         graphic.drawPolygon(xPoints, yPoints, xPoints.length);
 
         graphic.setColor(new Color(102, 102, 102));
