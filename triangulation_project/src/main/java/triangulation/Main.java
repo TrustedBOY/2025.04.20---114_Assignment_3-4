@@ -1,43 +1,19 @@
 package triangulation;
 
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
 
-        String readFilePath = "triangulation_project\\src\\inputData\\";
-        String writeFilePath = "triangulation_project\\src\\outputImages\\";
+        String readFileDirectory = "triangulation_project\\src\\inputData";
+        String writeFileDirectory = "triangulation_project\\src\\outputImages";
         
-        ModelWriter pngWriter = new PNGWriter();
-        TextReader textReader = new TextReader(readFilePath);
+        // Generate polygons for testing
+        PolygonGenerator.generatePolygons(readFileDirectory, 10);
 
-        List<List<Point>> polygons = textReader.getPolygons();
-        System.out.println(polygons.size() + " polygons read from text files.");
+        JavaTriangulationApplication app = new JavaTriangulationApplication(readFileDirectory, writeFileDirectory);
 
-        Polygon polygon = new Polygon(polygons.get(16));
-        Triangulation triangulation = new Triangulation(polygon);
-        triangulation.triangulate();
+        app.run();
 
-        System.out.println(triangulation.getTriangles().toString());
 
-        List<Point>[] vertices = triangulation.getVertices();
-        pngWriter.write(writeFilePath+ "\\1_Triangle.png", vertices);
-        pngWriter.write(writeFilePath+ "\\1_Polygon.png", polygon.getVertices());
-
-        // for (int i = 0; i < vertices.length ; i++) {
-        //     System.out.println("hi");
-        //     String currentWriteFilePath = writeFilePath + (i + 1) + "_Polygon.png";
-        //     pngWriter.write(currentWriteFilePath, vertices[i]);
-        // }
-
-    
-        // for (int i = 0; i < polygons.size(); i++) {
-
-        //     String currentWriteFilePath = writeFilePath + (i + 1) + "_Polygon.png";
-        //     pngWriter.write(currentWriteFilePath, polygons.get(i));
-        // }
-
-        System.out.println(polygons.size() + " polygons written to PNG files.");
     }
 }

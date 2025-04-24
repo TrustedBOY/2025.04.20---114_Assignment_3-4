@@ -32,13 +32,13 @@
             double maxX = getMaxX(polygons);
             double minY = getMinY(polygons);
             double maxY = getMaxY(polygons);
-            System.out.println("minX: " + minX + ", maxX: " + maxX);
-            System.out.println("minY: " + minY + ", maxY: " + maxY);
+            // System.out.println("minX: " + minX + ", maxX: " + maxX);
+            // System.out.println("minY: " + minY + ", maxY: " + maxY);
 
             double scaleX = (width - 40) / (maxX - minX);
             double scaleY = (height - 40) / (maxY - minY);
             double scale = Math.min(scaleX, scaleY);
-            System.out.println("scaleX: " + scaleX + ", scaleY: " + scaleY);
+            // System.out.println("scaleX: " + scaleX + ", scaleY: " + scaleY);
 
             for (List<Point> polygon : polygons) {
                 int[] xPoints = new int[polygon.size()];
@@ -85,14 +85,14 @@
             double maxX = getMaxX(vertices);
             double minY = getMinY(vertices);
             double maxY = getMaxY(vertices);
-            System.out.println("minX: " + minX + ", maxX: " + maxX);
-            System.out.println("minY: " + minY + ", maxY: " + maxY);
+            // System.out.println("minX: " + minX + ", maxX: " + maxX);
+            // System.out.println("minY: " + minY + ", maxY: " + maxY);
 
             double scaleX = (width - 30) / (maxX - minX);
             double scaleY = (height - 30) / (maxY - minY);
             double scale = Math.min(scaleX, scaleY);
 
-            System.out.println("scaleX: " + scaleX + ", scaleY: " + scaleY);
+            // System.out.println("scaleX: " + scaleX + ", scaleY: " + scaleY);
 
             int[] xPoints = new int[vertices.size()];
             int[] yPoints = new int[vertices.size()];

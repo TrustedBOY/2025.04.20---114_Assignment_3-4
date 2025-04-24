@@ -37,7 +37,7 @@ public class PolygonGenerator {
             vertices = sortVerticesCounterClockwise(vertices);
 
             // Save the polygon to a text file
-            savePolygonToFile(filePath, "polygon_" + (i + 1) + ".txt", vertices);
+            savePolygonToFile(filePath, (i + 1) + ".txt", vertices);
         }
     }
 
