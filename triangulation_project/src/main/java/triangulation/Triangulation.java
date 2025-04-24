@@ -1,58 +1,59 @@
 package triangulation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Triangulation {
 
     private final Polygon polygon;
-    private List<Triangle> triangles = new ArrayList<>();
+    private final List<Triangle> triangles = new ArrayList<>();
 
     public Triangulation(Polygon polygon) {
         this.polygon = polygon;
     }
 
     public void triangulate() {
-
-        System.out.println(polygon.getVertices().size());
-        triangulate(polygon, 0);
-        
+        List<Point> verts = new ArrayList<>(polygon.getVertices());
+        triangulateRecursive(verts);
     }
-    public void triangulate(Polygon polygon , int index) {
 
-        if (polygon.getVertices().size() < 3) return;
-        
-        System.out.println(index);
-        for(int i = 0 ; i < polygon.getVertices().size() ; i++){
-            Point a = polygon.getVertices().get(i);
-            Point b = polygon.getVertices().get((i + 1) % polygon.getVertices().size());
-            Point c = polygon.getVertices().get((i + 2) % polygon.getVertices().size());
-            List<Point> vertices = new ArrayList<>(Arrays.asList(a, b, c));
-            Triangle triangle = new Triangle(vertices);
-            if (triangle.isValidTriangel(vertices)) {
-                triangles.add(triangle);
-                List<Point> newVertices = new ArrayList<>(polygon.getVertices());
-                newVertices.remove(b);
-                
-                if (newVertices.size() < 3) return;
+    private void triangulateRecursive(List<Point> verts) {
+        if (verts.size() < 3) return;
 
-                Polygon newPolygon = new Polygon(newVertices);
-                triangulate(newPolygon, index + 1);
-            }
+        //last triangle
+        if (verts.size() == 3) {
+            triangles.add(new Triangle(List.of(verts.get(0), verts.get(1), verts.get(2))));
+            return;
         }
 
+        for (int i = 0; i < verts.size(); i++) {
+            Point a = verts.get(i);
+            Point b = verts.get((i + 1) % verts.size());
+            Point c = verts.get((i + 2) % verts.size());
+
+            if (isConvex(a, b, c)) {
+                triangles.add(new Triangle(List.of(a, b, c)));
+                verts.remove((i + 1) % verts.size());
+                triangulateRecursive(verts);
+                return;
+            }
+        }
+    }
+
+    private boolean isConvex(Point a, Point b, Point c) {
+        double cross = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+        return cross < 0; 
     }
 
     public List<Triangle> getTriangles() {
         return triangles;
     }
 
-    public List<Point>[] getVertices(){
-        List<Point>[] vertices = new List[triangles.size()];
+    public List<Point>[] getVertices() {
+        List<Point>[] verts = new List[triangles.size()];
         for (int i = 0; i < triangles.size(); i++) {
-            vertices[i] = triangles.get(i).getVertices();
+            verts[i] = triangles.get(i).getVertices();
         }
-        return vertices;
+        return verts;
     }
 }

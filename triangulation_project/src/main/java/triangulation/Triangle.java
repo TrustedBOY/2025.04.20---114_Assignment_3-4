@@ -11,13 +11,14 @@ public class Triangle extends Polygon {
         if (vertices.size() != 3) {
             throw new IllegalArgumentException("A triangle must have exactly 3 vertices.");
         }
-        if (!isValidTriangel(vertices)) {
-            
+        if (!isValidTriangle(vertices)) {
+            throw new IllegalArgumentException("The provided points do not form a valid triangle.");
         }
+        
         
     }
 
-    public boolean isValidTriangel(List<Point> vertices) {
+    public boolean isValidTriangle(List<Point> vertices) {
         double a = distance(vertices.get(0), vertices.get(1));
         double b = distance(vertices.get(1), vertices.get(2));
         double c = distance(vertices.get(2), vertices.get(0));

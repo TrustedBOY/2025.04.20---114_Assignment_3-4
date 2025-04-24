@@ -15,7 +15,7 @@ public class Main {
         List<List<Point>> polygons = textReader.getPolygons();
         System.out.println(polygons.size() + " polygons read from text files.");
 
-        Polygon polygon = new Polygon(polygons.get(0));
+        Polygon polygon = new Polygon(polygons.get(16));
         Triangulation triangulation = new Triangulation(polygon);
         triangulation.triangulate();
 
@@ -23,7 +23,7 @@ public class Main {
 
         List<Point>[] vertices = triangulation.getVertices();
         pngWriter.write(writeFilePath+ "\\1_Triangle.png", vertices);
-        pngWriter.write(writeFilePath+ "\\1_Polygon.png", polygons.get(0));
+        pngWriter.write(writeFilePath+ "\\1_Polygon.png", polygon.getVertices());
 
         // for (int i = 0; i < vertices.length ; i++) {
         //     System.out.println("hi");
