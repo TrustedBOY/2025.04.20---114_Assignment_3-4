@@ -12,6 +12,12 @@
 
     public class PNGWriter extends ModelWriter {
 
+        private static int[] randomColors = {
+                (int) (Math.random() * (255 - 20)) + 20,
+                (int) (Math.random() * (255 - 20)) + 20,
+                (int) (Math.random() * (255 - 20)) + 20 
+        };
+
         public PNGWriter() {
             super();
         }
@@ -49,15 +55,19 @@
                     yPoints[i] = (int) ((maxY - polygon.get(i).y) * scale + 30);
                 }
 
-                int r = (int) (Math.random() * (255 - 20)) + 20;
-                int g = (int) (Math.random() * (255 - 20)) + 20;
-                int b = (int) (Math.random() * (255 - 20)) + 20;
+                int r = randomColors[0];
+                int g = randomColors[1];
+                int b = randomColors[2];
+
+                randomColors[0] = (randomColors[0] += 53) % 255;
+                randomColors[1] = (randomColors[1] += 73) % 255;    
+                randomColors[2] = (randomColors[2] += 93) % 255;
 
                 // graphic.setColor(Color.black);
                 // graphic.setStroke(new BasicStroke(10));
                 // graphic.drawPolygon(xPoints, yPoints, xPoints.length);
 
-                graphic.setColor(new Color(r, g, b));
+                graphic.setColor(new Color(r , g, b));
                 graphic.fillPolygon(xPoints, yPoints, xPoints.length);
             }
 

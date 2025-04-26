@@ -34,12 +34,14 @@ public class Triangulation {
                 Point b = verts.get((i + 1) % verts.size());
                 Point c = verts.get((i + 2) % verts.size());
 
-                if (isConvex(a, b, c)) {
-                    triangles.add(new Triangle(List.of(a, b, c)));
+                Triangle t = new Triangle(List.of(a, b, c));
+                if (isConvex(a, b, c) && isEar(a, b, c, verts) && !t.isThin()) {
+                    triangles.add(t);
                     verts.remove((i + 1) % verts.size());
                     triangulateRecursive(verts);
                     return;
                 }
+
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index out of bounds: " + e.getMessage());
@@ -66,4 +68,30 @@ public class Triangulation {
         }
         return verts;
     }
+
+    private boolean isEar(Point a, Point b, Point c, List<Point> verts) {
+        for (Point p : verts) {
+            if (p == a || p == b || p == c) {
+                continue;
+            }
+            if (pointInTriangle(p, a, b, c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean pointInTriangle(Point p, Point a, Point b, Point c) {
+        double areaOrig = Math.abs(crossProduct(a, b, c));
+        double area1 = Math.abs(crossProduct(p, b, c));
+        double area2 = Math.abs(crossProduct(a, p, c));
+        double area3 = Math.abs(crossProduct(a, b, p));
+
+        return Math.abs(areaOrig - (area1 + area2 + area3)) < 1e-6;
+    }
+
+    private double crossProduct(Point a, Point b, Point c) {
+        return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+    }
+
 }

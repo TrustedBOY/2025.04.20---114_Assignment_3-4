@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Triangle extends Polygon {
 
-    public static final double thinThresholdRatio = 0.1;
+    public static final double thinThresholdRatio = 0.3;
 
     public Triangle(List<Point> vertices) {
         super(vertices);
