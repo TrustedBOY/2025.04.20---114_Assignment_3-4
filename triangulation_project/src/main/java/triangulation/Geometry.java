@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Geometry {
 
-    protected final List<Point> vertices;
+    protected List<Point> vertices;
 
     public Geometry(List<Point> vertices) {
         if (vertices == null || vertices.size() < 3) {
@@ -45,7 +45,7 @@ public abstract class Geometry {
     }
 
     protected void toClockwise() {
-        // This method reverses the order of the vertices to make them clockwise.
+        // reverses the order of the vertices to make them clockwise.
 
         if (!isClockwise(vertices)) {
             Collections.reverse(vertices);

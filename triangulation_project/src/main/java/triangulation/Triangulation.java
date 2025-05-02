@@ -18,30 +18,51 @@ public class Triangulation {
     }
 
     private void triangulateRecursive(List<Point> verts) {
-        if (verts.size() < 3) {
+        // Create a copy of the list to avoid modifying the original
+        List<Point> vertsCopy = new ArrayList<>(verts);
+
+        // check if we have at least 3 vertices to make a triangle
+        if (vertsCopy.size() < 3) {
             return;
         }
 
-        //last triangle
-        if (verts.size() == 3) {
-            triangles.add(new Triangle(List.of(verts.get(0), verts.get(1), verts.get(2))));
+        // last triangle
+        if (vertsCopy.size() == 3) {
+            triangles.add(new Triangle(List.of(vertsCopy.get(0), vertsCopy.get(1), vertsCopy.get(2))));
             return;
         }
 
         try {
-            for (int i = 0; i < verts.size(); i++) {
-                Point a = verts.get(i);
-                Point b = verts.get((i + 1) % verts.size());
-                Point c = verts.get((i + 2) % verts.size());
+            Triangle bestFallback = null;
 
-                Triangle t = new Triangle(List.of(a, b, c));
-                if (isConvex(a, b, c) && isEar(a, b, c, verts) && !t.isThin()) {
-                    triangles.add(t);
-                    verts.remove((i + 1) % verts.size());
-                    triangulateRecursive(verts);
-                    return;
+            for (int i = 0; i < vertsCopy.size(); i++) {
+                Point a = vertsCopy.get(i);
+                Point b = vertsCopy.get((i + 1) % vertsCopy.size());
+                Point c = vertsCopy.get((i + 2) % vertsCopy.size());
+
+                Triangle triangle = new Triangle(List.of(a, b, c));
+
+                if (isConvex(a, b, c) && isEar(a, b, c, vertsCopy)) {
+                    if (!triangle.isThin()) {
+                        triangles.add(triangle);
+                        vertsCopy.remove((i + 1) % vertsCopy.size());
+                        triangulateRecursive(vertsCopy);
+                        return;
+                    } else if (bestFallback == null) {
+                        bestFallback = triangle;
+                    }
                 }
+            }
 
+            // If no non-thin triangle was found, use the best fallback
+            if (bestFallback != null) {
+                Point a = bestFallback.getVertices().get(0);
+                Point b = bestFallback.getVertices().get(1);
+                Point c = bestFallback.getVertices().get(2);
+
+                triangles.add(bestFallback);
+                vertsCopy.remove(vertsCopy.indexOf(b));
+                triangulateRecursive(vertsCopy);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index out of bounds: " + e.getMessage());
@@ -87,7 +108,7 @@ public class Triangulation {
         double area2 = Math.abs(crossProduct(a, p, c));
         double area3 = Math.abs(crossProduct(a, b, p));
 
-        return Math.abs(areaOrig - (area1 + area2 + area3)) < 1e-6;
+        return Math.abs(areaOrig - (area1 + area2 + area3)) < 0.000001;
     }
 
     private double crossProduct(Point a, Point b, Point c) {

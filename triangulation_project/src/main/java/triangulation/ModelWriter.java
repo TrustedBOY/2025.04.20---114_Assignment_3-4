@@ -13,6 +13,10 @@ public abstract class ModelWriter {
     public abstract void write(String path, List<Point> vertices);
 
     public double getMaxY(List<Point>[] polygons) {
+        if (polygons == null || polygons.length == 0) {
+            return 0;
+        }
+
         double maxY = polygons[0].get(0).y;
         for (List<Point> polygon : polygons) {
             maxY = Math.max(maxY, getMaxY(polygon));
@@ -22,6 +26,10 @@ public abstract class ModelWriter {
     }
 
     public double getMaxY(List<Point> vertices){
+        if (vertices == null || vertices.isEmpty()) {
+            return 0;
+        }
+
         double maxY = vertices.get(0).y;
         for (Point point : vertices) {
             maxY = Math.max(maxY,point.y);
@@ -30,6 +38,10 @@ public abstract class ModelWriter {
     }
 
     public double getMinY(List<Point>[] polygons) {
+        if (polygons == null || polygons.length == 0) {
+            return 0;
+        }
+
         double minY = polygons[0].get(0).y;
         for (List<Point> polygon : polygons) {
             minY = Math.min(minY, getMinY(polygon));
@@ -39,6 +51,10 @@ public abstract class ModelWriter {
     }
 
     public double getMinY(List<Point> vertices){
+        if (vertices == null || vertices.isEmpty()) {
+            return 0;
+        }
+
         double minY = vertices.get(0).y;
         for (Point point : vertices) {
             minY = Math.min(minY, point.y);
@@ -47,6 +63,10 @@ public abstract class ModelWriter {
     }
 
     public double getMaxX(List<Point>[] polygons) {
+        if (polygons == null || polygons.length == 0) {
+            return 0;
+        }
+
         double maxX = polygons[0].get(0).x;
         for (List<Point> polygon : polygons) {
             maxX = Math.max(maxX, getMaxX(polygon));
@@ -56,6 +76,10 @@ public abstract class ModelWriter {
     }
 
     public double getMaxX(List<Point> vertices){
+        if (vertices == null || vertices.isEmpty()) {
+            return 0;
+        }
+
         double maxX = vertices.get(0).x;
         for (Point point : vertices) {
             maxX = Math.max(maxX, point.x);
@@ -64,6 +88,10 @@ public abstract class ModelWriter {
     }
     
     public double getMinX(List<Point>[] polygons) {
+        if (polygons == null || polygons.length == 0) {
+            return 0;
+        }
+
         double minX = polygons[0].get(0).x;
         for (List<Point> polygon : polygons) {
             minX = Math.min(minX, getMinX(polygon));
@@ -73,6 +101,10 @@ public abstract class ModelWriter {
     }
 
     public double getMinX(List<Point> vertices){
+        if (vertices == null || vertices.isEmpty()) {
+            return 0;
+        }
+        
         double minX = vertices.get(0).x;
         for (Point point : vertices) {
             minX = Math.min(minX, point.x);

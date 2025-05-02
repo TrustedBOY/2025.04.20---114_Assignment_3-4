@@ -63,9 +63,9 @@
                 randomColors[1] = (randomColors[1] += 73) % 255;    
                 randomColors[2] = (randomColors[2] += 93) % 255;
 
-                // graphic.setColor(Color.black);
-                // graphic.setStroke(new BasicStroke(10));
-                // graphic.drawPolygon(xPoints, yPoints, xPoints.length);
+                graphic.setColor(Color.black);
+                graphic.setStroke(new BasicStroke(3));
+                graphic.drawPolygon(xPoints, yPoints, xPoints.length);
 
                 graphic.setColor(new Color(r , g, b));
                 graphic.fillPolygon(xPoints, yPoints, xPoints.length);
