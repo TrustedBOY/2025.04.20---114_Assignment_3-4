@@ -1,7 +1,5 @@
 package triangulation;
 
-import java.util.Scanner;
-
 public class Main {
     static final String readFileDirectory = "triangulation_project\\src\\inputData";
     static final String writeFileDirectory = "triangulation_project\\src\\outputImages";
@@ -11,7 +9,6 @@ public class Main {
         // Generate polygons for testing
         writeCoordinatesToFile();
 
-        new Scanner(System.in).next();
         // Process the polygons and generate triangulations
         process();
 
