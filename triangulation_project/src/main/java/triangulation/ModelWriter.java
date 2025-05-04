@@ -1,5 +1,6 @@
 package triangulation;
 
+import java.io.File;
 import java.util.List;
 
 public abstract class ModelWriter {
@@ -9,107 +10,63 @@ public abstract class ModelWriter {
     
 
 
-    public abstract void write(String path, List<Point>[] polygons);
-    public abstract void write(String path, List<Point> vertices);
+    public abstract void writePolygons(String path, List<List<Point>> polygons);
+    public abstract void writePolygon(String path, List<Point> vertices);
 
-    public double getMaxY(List<Point>[] polygons) {
-        if (polygons == null || polygons.length == 0) {
-            return 0;
+    public static void clearDirectory(String path) {
+        File directory = new File(path);
+        if (directory.exists() && directory.isDirectory()) {
+            for (File file : directory.listFiles()) {
+                if (file.isFile()) {
+                    file.delete();
+                }
+            }
+            System.out.println("Directory cleared: " + path);
+        } else {
+            System.out.println("Directory does not exist or is not a directory: " + path);
         }
-
-        double maxY = polygons[0].get(0).y;
-        for (List<Point> polygon : polygons) {
-            maxY = Math.max(maxY, getMaxY(polygon));
-
-        }
-        return maxY;
-    }
-
-    public double getMaxY(List<Point> vertices){
-        if (vertices == null || vertices.isEmpty()) {
-            return 0;
-        }
-
-        double maxY = vertices.get(0).y;
-        for (Point point : vertices) {
-            maxY = Math.max(maxY,point.y);
-        }
-        return maxY;
-    }
-
-    public double getMinY(List<Point>[] polygons) {
-        if (polygons == null || polygons.length == 0) {
-            return 0;
-        }
-
-        double minY = polygons[0].get(0).y;
-        for (List<Point> polygon : polygons) {
-            minY = Math.min(minY, getMinY(polygon));
-
-        }
-        return minY;
-    }
-
-    public double getMinY(List<Point> vertices){
-        if (vertices == null || vertices.isEmpty()) {
-            return 0;
-        }
-
-        double minY = vertices.get(0).y;
-        for (Point point : vertices) {
-            minY = Math.min(minY, point.y);
-        }
-        return minY;
-    }
-
-    public double getMaxX(List<Point>[] polygons) {
-        if (polygons == null || polygons.length == 0) {
-            return 0;
-        }
-
-        double maxX = polygons[0].get(0).x;
-        for (List<Point> polygon : polygons) {
-            maxX = Math.max(maxX, getMaxX(polygon));
-
-        }
-        return maxX;
-    }
-
-    public double getMaxX(List<Point> vertices){
-        if (vertices == null || vertices.isEmpty()) {
-            return 0;
-        }
-
-        double maxX = vertices.get(0).x;
-        for (Point point : vertices) {
-            maxX = Math.max(maxX, point.x);
-        }
-        return maxX;
     }
     
-    public double getMinX(List<Point>[] polygons) {
-        if (polygons == null || polygons.length == 0) {
+    public double getMax(List<?> polygonsOrVertices, boolean isX) {
+        if (polygonsOrVertices == null || polygonsOrVertices.isEmpty()) {
             return 0;
         }
 
-        double minX = polygons[0].get(0).x;
-        for (List<Point> polygon : polygons) {
-            minX = Math.min(minX, getMinX(polygon));
+        double max = Double.NEGATIVE_INFINITY;
 
+        if (polygonsOrVertices.get(0) instanceof List) {
+            for (Object polygon : polygonsOrVertices) {
+                max = Math.max(max, getMax((List<?>) polygon, isX));
+            }
+        } else if (polygonsOrVertices.get(0) instanceof Point) {
+            for (Object point : polygonsOrVertices) {
+                Point p = (Point) point;
+                max = Math.max(max, isX ? p.x : p.y);
+            }
         }
-        return minX;
+
+        return max;
     }
 
-    public double getMinX(List<Point> vertices){
-        if (vertices == null || vertices.isEmpty()) {
+    public double getMin(List<?> polygonsOrVertices, boolean isX) {
+        if (polygonsOrVertices == null || polygonsOrVertices.isEmpty()) {
             return 0;
         }
-        
-        double minX = vertices.get(0).x;
-        for (Point point : vertices) {
-            minX = Math.min(minX, point.x);
+
+        double min = Double.POSITIVE_INFINITY;
+
+        if (polygonsOrVertices.get(0) instanceof List) {
+            for (Object polygon : polygonsOrVertices) {
+                min = Math.min(min, getMin((List<?>) polygon, isX));
+            }
+        } else if (polygonsOrVertices.get(0) instanceof Point) {
+            for (Object point : polygonsOrVertices) {
+                Point p = (Point) point;
+                min = Math.min(min, isX ? p.x : p.y);
+            }
         }
-        return minX;
+
+        return min;
     }
 
 }

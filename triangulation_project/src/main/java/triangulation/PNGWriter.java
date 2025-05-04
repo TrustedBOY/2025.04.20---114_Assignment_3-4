@@ -12,7 +12,7 @@
 
     public class PNGWriter extends ModelWriter {
 
-        private static int[] randomColors = {
+        private static final int[] randomColors = {
                 (int) (Math.random() * (255 - 20)) + 20,
                 (int) (Math.random() * (255 - 20)) + 20,
                 (int) (Math.random() * (255 - 20)) + 20 
@@ -23,7 +23,7 @@
         }
 
         @Override
-        public void write(String path, List<Point>[] polygons) {
+        public void writePolygons(String path, List<List<Point>> polygons) {
             int width = 1500;
             int height = 1500;
 
@@ -34,17 +34,15 @@
             graphic.fillRect(0, 0, width, height);
 
             // Find bounds
-            double minX = getMinX(polygons);
-            double maxX = getMaxX(polygons);
-            double minY = getMinY(polygons);
-            double maxY = getMaxY(polygons);
-            // System.out.println("minX: " + minX + ", maxX: " + maxX);
-            // System.out.println("minY: " + minY + ", maxY: " + maxY);
+            double minX = getMin(polygons , true);
+            double maxX = getMax(polygons , true);
+            double minY = getMin(polygons , false);
+            double maxY = getMax(polygons , false);
 
             double scaleX = (width - 40) / (maxX - minX);
             double scaleY = (height - 40) / (maxY - minY);
             double scale = Math.min(scaleX, scaleY);
-            // System.out.println("scaleX: " + scaleX + ", scaleY: " + scaleY);
+
 
             for (List<Point> polygon : polygons) {
                 int[] xPoints = new int[polygon.size()];
@@ -80,7 +78,7 @@
         }
 
         @Override
-        public void write(String path, List<Point> vertices) {
+        public void writePolygon(String path, List<Point> vertices) {
             int width = 1000;
             int height = 1000;
 
@@ -91,18 +89,14 @@
             graphic.fillRect(0, 0, width, height);
 
             // Find bounds
-            double minX = getMinX(vertices);
-            double maxX = getMaxX(vertices);
-            double minY = getMinY(vertices);
-            double maxY = getMaxY(vertices);
-            // System.out.println("minX: " + minX + ", maxX: " + maxX);
-            // System.out.println("minY: " + minY + ", maxY: " + maxY);
+            double minX = getMin(vertices , true);
+            double maxX = getMax(vertices , true);
+            double minY = getMin(vertices , false);
+            double maxY = getMax(vertices , false);
 
             double scaleX = (width - 30) / (maxX - minX);
             double scaleY = (height - 30) / (maxY - minY);
             double scale = Math.min(scaleX, scaleY);
-
-            // System.out.println("scaleX: " + scaleX + ", scaleY: " + scaleY);
 
             int[] xPoints = new int[vertices.size()];
             int[] yPoints = new int[vertices.size()];
@@ -113,7 +107,7 @@
             }
 
             graphic.setColor(Color.black);
-            graphic.setStroke(new BasicStroke(10));
+            graphic.setStroke(new BasicStroke(5));
             graphic.drawPolygon(xPoints, yPoints, xPoints.length);
 
             graphic.setColor(new Color(102, 102, 102));

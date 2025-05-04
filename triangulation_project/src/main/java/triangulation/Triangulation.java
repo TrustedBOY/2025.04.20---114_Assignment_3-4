@@ -56,9 +56,7 @@ public class Triangulation {
 
             // If no non-thin triangle was found, use the best fallback
             if (bestFallback != null) {
-                Point a = bestFallback.getVertices().get(0);
                 Point b = bestFallback.getVertices().get(1);
-                Point c = bestFallback.getVertices().get(2);
 
                 triangles.add(bestFallback);
                 vertsCopy.remove(vertsCopy.indexOf(b));
@@ -82,10 +80,10 @@ public class Triangulation {
         return triangles;
     }
 
-    public List<Point>[] getVertices() {
-        List<Point>[] verts = new List[triangles.size()];
-        for (int i = 0; i < triangles.size(); i++) {
-            verts[i] = triangles.get(i).getVertices();
+    public List<List<Point>> getVertices() {
+        List<List<Point>> verts = new ArrayList<>();
+        for (Triangle triangle : triangles) {
+            verts.add(triangle.getVertices());
         }
         return verts;
     }

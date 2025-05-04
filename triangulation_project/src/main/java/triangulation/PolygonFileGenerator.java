@@ -18,9 +18,10 @@ public class PolygonFileGenerator {
         this.NUM_FILES = numFiles;
     }
 
-    public void generate() {
-        String directoryPath = "triangulation_project\\\\src\\\\inputData";
+    public void generate() { 
 
+        DirectoryCleaner.clearDirectory(directoryPath);
+        
         for (int i = 1; i <= NUM_FILES; i++) {
             int numPoints = getRandomInt(MIN_POINTS, MAX_POINTS);
             ArrayList<double[]> points = generatePolygonPoints(numPoints);
@@ -33,7 +34,7 @@ public class PolygonFileGenerator {
             writePointsToFile(points, filename);
         }
 
-        System.out.printf("%d polygon files generated in: %s " , NUM_FILES , directoryPath);
+        System.out.printf("%d polygon files generated in: %s \n" , NUM_FILES , directoryPath);
     }
 
     private ArrayList<double[]> generatePolygonPoints(int numPoints) {

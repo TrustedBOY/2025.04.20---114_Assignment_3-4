@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Triangle extends Polygon {
 
-    public static final double thinThresholdRatio = 0.3;
+    public static final double THIN_THRESHOLD_RATIO = 0.2;
 
     public Triangle(List<Point> vertices) {
         super(vertices);
@@ -13,18 +13,15 @@ public class Triangle extends Polygon {
         }
         if (!isValidTriangle(vertices)) {
             throw new IllegalArgumentException("The provided points do not form a valid triangle.");
-        }
-        
-        
+        } 
     }
 
-    public boolean isValidTriangle(List<Point> vertices) {
+    public static boolean isValidTriangle(List<Point> vertices) {
         double a = distance(vertices.get(0), vertices.get(1));
         double b = distance(vertices.get(1), vertices.get(2));
         double c = distance(vertices.get(2), vertices.get(0));
 
         return (a + b > c) && (a + c > b) && (b + c > a);
-
     }
 
     public boolean isThin(){
@@ -35,7 +32,7 @@ public class Triangle extends Polygon {
         double minSide = Math.min(a, Math.min(b, c));
         double maxSide = Math.max(a, Math.max(b, c));
 
-        return (minSide / maxSide) < Triangle.thinThresholdRatio; 
+        return (minSide / maxSide) < Triangle.THIN_THRESHOLD_RATIO; 
     }
 
     @Override
@@ -51,10 +48,20 @@ public class Triangle extends Polygon {
     }
 
     @Override
-    
-    public String toString() {
-        return "Triangle: " + vertices.get(0) + ", " + vertices.get(1) + ", " + vertices.get(2);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Polygon)) return false;
+        Polygon other = (Polygon) o;
+        return vertices.equals(other.vertices);
     }
 
-    
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Triangle: " + vertices.get(0) + ", " + vertices.get(1) + ", " + vertices.get(2);
+    } 
 }

@@ -29,6 +29,19 @@ public class Polygon extends Geometry {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Polygon)) return false;
+        Polygon other = (Polygon) o;
+        return vertices.equals(other.vertices);
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Polygon: ");
         for (Point vertex : vertices) {
