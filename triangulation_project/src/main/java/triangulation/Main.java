@@ -3,7 +3,7 @@ package triangulation;
 public class Main {
     static final String READ_FILE_DIRECTORY = "triangulation_project\\src\\inputData";
     static final String WRITE_FILE_DIRECTORY = "triangulation_project\\src\\outputImages";
-    static final int POLYGONS_COUNT = 0 ;
+    static final int POLYGONS_COUNT = 10 ;
 
     public static void main(String[] args) {
 

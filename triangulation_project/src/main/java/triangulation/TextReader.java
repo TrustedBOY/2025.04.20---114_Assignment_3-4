@@ -10,7 +10,7 @@ import java.util.List;
 public class TextReader {
 
     public final String filePath ;
-    private List<List<Point>> polygons = new ArrayList<>();
+    private final List<List<Point>> polygons = new ArrayList<>();
 
     public TextReader(String filePath) {
         this.filePath = filePath;

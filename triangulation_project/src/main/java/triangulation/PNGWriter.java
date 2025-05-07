@@ -63,10 +63,13 @@
 
                 graphic.setColor(Color.black);
                 graphic.setStroke(new BasicStroke(3));
-                graphic.drawPolygon(xPoints, yPoints, xPoints.length);
+                graphic.drawPolygon(xPoints, yPoints, Math.min(xPoints.length , yPoints.length));
 
                 graphic.setColor(new Color(r , g, b));
-                graphic.fillPolygon(xPoints, yPoints, xPoints.length);
+                graphic.fillPolygon(xPoints, yPoints, Math.min(xPoints.length , yPoints.length));
+
+                
+                
             }
 
             try {
