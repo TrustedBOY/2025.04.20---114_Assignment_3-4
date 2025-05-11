@@ -7,8 +7,6 @@ public abstract class ModelWriter {
 
     public ModelWriter() {
     }
-    
-
 
     public abstract void writePolygons(String path, List<List<Point>> polygons);
     public abstract void writePolygon(String path, List<Point> vertices);
@@ -26,7 +24,7 @@ public abstract class ModelWriter {
             System.out.println("Directory does not exist or is not a directory: " + path);
         }
     }
-    
+
     public double getMax(List<?> polygonsOrVertices, boolean isX) {
         if (polygonsOrVertices == null || polygonsOrVertices.isEmpty()) {
             return 0;

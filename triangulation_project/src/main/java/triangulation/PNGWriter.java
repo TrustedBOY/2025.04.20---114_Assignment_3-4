@@ -24,7 +24,7 @@
 
         @Override
         public void writePolygons(String path, List<List<Point>> polygons) {
-            int width = 1500;
+            int width  = 1500;
             int height = 1500;
 
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -62,7 +62,7 @@
                 randomColors[2] = (randomColors[2] += 93) % 255;
 
                 graphic.setColor(Color.black);
-                graphic.setStroke(new BasicStroke(3));
+                graphic.setStroke(new BasicStroke(1));
                 graphic.drawPolygon(xPoints, yPoints, Math.min(xPoints.length , yPoints.length));
 
                 graphic.setColor(new Color(r , g, b));
