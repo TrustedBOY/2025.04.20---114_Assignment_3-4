@@ -18,50 +18,44 @@ public class Triangulation {
     }
 
     private void triangulateRecursive(List<Point> verts) {
-        // Create a copy of the list to avoid modifying the original
         List<Point> vertsCopy = new ArrayList<>(verts);
 
-        // check if we have at least 3 vertices to make a triangle
-        if (vertsCopy.size() < 3) {
+        if (vertsCopy.size() < 3)
             return;
-        }
 
-        // last triangle
         if (vertsCopy.size() == 3) {
             triangles.add(new Triangle(List.of(vertsCopy.get(0), vertsCopy.get(1), vertsCopy.get(2))));
             return;
         }
 
         try {
-            Triangle bestFallback = null;
+            Triangle bestTriangle = null;
+            double bestMinAngle = -1;
 
             for (int i = 0; i < vertsCopy.size(); i++) {
                 Point a = vertsCopy.get(i);
                 Point b = vertsCopy.get((i + 1) % vertsCopy.size());
                 Point c = vertsCopy.get((i + 2) % vertsCopy.size());
 
-                Triangle triangle = new Triangle(List.of(a, b, c));
+                Triangle testTriangle = new Triangle(List.of(a, b, c));
 
                 if (isConvex(a, b, c) && isEar(a, b, c, vertsCopy)) {
-                    if (!triangle.isThin()) {
-                        triangles.add(triangle);
-                        vertsCopy.remove((i + 1) % vertsCopy.size());
-                        triangulateRecursive(vertsCopy);
-                        return;
-                    } else if (bestFallback == null) {
-                        bestFallback = triangle;
+                    double minAngle = testTriangle.getMinAngle();
+
+                    if (minAngle > bestMinAngle) {
+                        bestMinAngle = minAngle;
+                        bestTriangle = testTriangle;
                     }
                 }
             }
 
-            // If no non-thin triangle was found, use the best fallback
-            if (bestFallback != null) {
-                Point b = bestFallback.getVertices().get(1);
-
-                triangles.add(bestFallback);
+            if (bestTriangle != null) {
+                Point b = bestTriangle.getVertices().get(1);
+                triangles.add(bestTriangle);
                 vertsCopy.remove(vertsCopy.indexOf(b));
                 triangulateRecursive(vertsCopy);
             }
+
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index out of bounds: " + e.getMessage());
         } catch (NullPointerException e) {

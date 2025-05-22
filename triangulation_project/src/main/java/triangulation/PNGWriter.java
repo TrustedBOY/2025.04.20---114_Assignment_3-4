@@ -12,6 +12,8 @@
 
     public class PNGWriter extends ModelWriter {
 
+        private int savedImages = 0;
+
         private static final int[] randomColors = {
                 (int) (Math.random() * (255 - 20)) + 20,
                 (int) (Math.random() * (255 - 20)) + 20,
@@ -74,7 +76,8 @@
 
             try {
                 ImageIO.write(image, "png", new File(path));
-                System.out.println("Image saved to: " + path);
+                // System.out.println("Image saved to: " + path);
+                savedImages++;
             } catch (IOException e) {
                 e.getMessage();
             }
@@ -118,10 +121,14 @@
 
             try {
                 ImageIO.write(image, "png", new File(path));
-                System.out.println("Image saved to: " + path);
+                // System.out.println("Image saved to: " + path);
+                savedImages++;
             } catch (IOException e) {
                 e.getMessage();
             }
         }
 
+        public int getSavedImages() {
+            return savedImages;
+        }
     }

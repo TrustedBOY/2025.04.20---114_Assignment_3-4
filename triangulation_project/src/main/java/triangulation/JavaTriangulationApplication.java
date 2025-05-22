@@ -16,7 +16,7 @@ public class JavaTriangulationApplication {
     public void run() {
         DirectoryCleaner.clearDirectory(writeFilePath);
 
-        ModelWriter pngWriter = new PNGWriter();
+        PNGWriter pngWriter = new PNGWriter();
         TextReader textReader = new TextReader(readFilePath);
 
         List<List<Point>> polygons = textReader.getPolygons();
@@ -34,7 +34,9 @@ public class JavaTriangulationApplication {
             triangulation.triangulate();
             List<List<Point>> vertices = triangulation.getVertices();
             pngWriter.writePolygons(currentWriteFilePath, vertices);
+            
         }
+        System.out.printf("%d Images are saved in outPut directory: %s\n", pngWriter.getSavedImages() , writeFilePath);
 
     }
 
