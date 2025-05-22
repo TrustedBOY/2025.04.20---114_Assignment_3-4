@@ -13,7 +13,53 @@ public class Triangle extends Polygon {
         }
         if (!isValidTriangle(vertices)) {
             throw new IllegalArgumentException("The provided points do not form a valid triangle.");
-        } 
+        }
+    }
+
+    private static double calculateDegree(Point pTarget, Point p1, Point p2) {
+        double c = distance(p1, p2);
+        double a = distance(pTarget, p2);
+        double b = distance(pTarget, p1);
+
+        return Math.round((Math.toDegrees(Math.acos((a * a + b * b - c * c) / (2 * a * b)))) * 1e3) * 1e-3;
+    }
+
+    public double getMinAngle(){
+        Point[] vertices = {
+
+            this.vertices.get(0),
+            this.vertices.get(1),
+            this.vertices.get(2)
+
+        };
+
+        double [] angles = new double[3];
+
+        for(int i = 0 ; i < 3 ; i ++){
+            angles[i] = calculateDegree(vertices[i], vertices[(i+1)%3], vertices[(i+2)%3]);
+        }
+
+        return Math.min(angles[0],Math.min(angles[1] , angles[2]));
+    
+    }
+
+    public double getMaxAngle(){
+        Point[] vertices = {
+
+            this.vertices.get(0),
+            this.vertices.get(1),
+            this.vertices.get(2)
+
+        };
+
+        double [] angles = new double[3];
+
+        for(int i = 0 ; i < 3 ; i ++){
+            angles[i] = calculateDegree(vertices[i], vertices[(i+1)%3], vertices[(i+2)%3]);
+        }
+
+        return Math.max(angles[0],Math.max(angles[1] , angles[2]));
+    
     }
 
     public static boolean isValidTriangle(List<Point> vertices) {
@@ -24,7 +70,7 @@ public class Triangle extends Polygon {
         return (a + b > c) && (a + c > b) && (b + c > a);
     }
 
-    public boolean isThin(){
+    public boolean isThin() {
         double a = distance(vertices.get(0), vertices.get(1));
         double b = distance(vertices.get(1), vertices.get(2));
         double c = distance(vertices.get(2), vertices.get(0));
@@ -32,7 +78,7 @@ public class Triangle extends Polygon {
         double minSide = Math.min(a, Math.min(b, c));
         double maxSide = Math.max(a, Math.max(b, c));
 
-        return (minSide / maxSide) < Triangle.THIN_THRESHOLD_RATIO; 
+        return (minSide / maxSide) < Triangle.THIN_THRESHOLD_RATIO;
     }
 
     @Override
@@ -49,8 +95,10 @@ public class Triangle extends Polygon {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Polygon)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Polygon))
+            return false;
         Polygon other = (Polygon) o;
         return vertices.equals(other.vertices);
     }
@@ -63,5 +111,5 @@ public class Triangle extends Polygon {
     @Override
     public String toString() {
         return "Triangle: " + vertices.get(0) + ", " + vertices.get(1) + ", " + vertices.get(2);
-    } 
+    }
 }
